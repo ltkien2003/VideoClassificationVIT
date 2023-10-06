@@ -13,7 +13,7 @@ print(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'videoupload/fire
 firebase_credentials = credentials.Certificate(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'videoupload'
                                                                                                         '/firebase'
                                                                                                         '-key.json'))
-firebase_admin.initialize_app(firebase_credentials, {'storageBucket': 'vivit-f07ee.appspot.com'})
+firebase_admin.initialize_app(firebase_credentials, {'storageBucket': 'vivit-ecdf7.appspot.com'})
 
 from django.http import JsonResponse
 
