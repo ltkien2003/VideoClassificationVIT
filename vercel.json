@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "VideoClassificationVIT/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "VideoClassificationVIT/wsgi.py"
+      }
+    ]
+}
