@@ -114,7 +114,7 @@
             }
         }
 
-        #video-info{
+        .video-info {
             text-align: center;
         }
 
@@ -128,8 +128,6 @@
     </label>
     <div id="error"></div>
     <div id="image-display"></div>
-    <div id="loading-spinner" class="spinner"></div>
-    <div id="video-info"></div>
 </div>
 <!-- Script -->
 <script>
@@ -139,8 +137,6 @@
     let container = document.querySelector(".container");
     let error = document.getElementById("error");
     let imageDisplay = document.getElementById("image-display");
-    let loadingSpinner = document.getElementById("loading-spinner");
-    let videoInfoElement = document.getElementById("video-info");
 
 
     const fileHandler = (file, name, type) => {
@@ -153,7 +149,6 @@
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            videoInfoElement.textContent = "";
             // Video and file name
             let videoContainer = document.createElement("figure");
             let video = document.createElement("video");
@@ -163,18 +158,21 @@
             videoContainer.innerHTML += `<figcaption>${name}</figcaption>`;
             imageDisplay.appendChild(videoContainer);
             let formData = new FormData();
-            formData.append("video", uploadButton.files[0]);
-            loadingSpinner.style.display = "block";
+            formData.append("video", file);
+            let spinnerDiv = document.createElement('div');
+            spinnerDiv.className = 'spinner';
+            spinnerDiv.style.display = 'block'
+            videoContainer.appendChild(spinnerDiv);
             fetch("", {
                 method: "POST",
                 body: formData,
             })
                 .then((response) => response.text())
                 .then((result) => {
-                    loadingSpinner.style.display = "none";
-                    var data = JSON.parse(result);
-                    var result_value = data.result;
-                    videoInfoElement.textContent = "This is action: " +  result_value;
+                    let data = JSON.parse(result);
+                    let result_value = data.result;
+                    spinnerDiv.style.display = 'none';
+                    videoContainer.innerHTML += `<div class="video-info">${result_value}</div>`
                 })
                 .catch((error) => {
                     console.error("Error:", error);
